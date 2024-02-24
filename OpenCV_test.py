@@ -191,7 +191,6 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
         '''function that waits for appropriate booking time'''
         while True:
             current_time = datetime.datetime.now().time()
-            #if 1 == 1:
             if current_time >= datetime.time(hr-1, 59,0,1):
                 bool = book_slot(p_court, p_time,ball,hr)
                 if bool == False:
@@ -229,7 +228,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
             try:
                 while driver.find_element(By.ID,'servertime').text != '7:59:59 pm':
                     try:
-                        print('time test: ',driver.find_element(By.ID,'servertime').text)
+                        print('time : ',driver.find_element(By.ID,'servertime').text)
                     except:
                         pass
                 time.sleep(0.95)
@@ -242,7 +241,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
             try:
                 while driver.find_element(By.ID,'servertime').text != '9:59:59 am':
                     try:
-                        print('time test: ',driver.find_element(By.ID,'servertime').text)
+                        print('time : ',driver.find_element(By.ID,'servertime').text)
                     except:
                         pass
                 time.sleep(0.95)
@@ -261,8 +260,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
                     driver.back()
             except NoSuchElementException:
                 print("Element doesn't exists")
-        
-            print('driver displayed')
+ 
             l = len(courts)
             _ = 0
 
@@ -384,7 +382,6 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
     while True:
         current_time = datetime.datetime.now().time()
        
-        #if 1 == 1:
         if current_time >= datetime.time(hr-1, 57, 0, 2):
                 try:
                     login_tennis(day, court)
