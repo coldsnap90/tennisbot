@@ -218,12 +218,11 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
             try:
                 book = driver.find_element(By.XPATH,x_slot)
                 time.sleep(1)
-                print('book')
                 bool = True
             except:
                 print('cannot find element')
         booked_court = False
-        #waiting for time to book\
+        #waiting for time to book
         if hr == 20:
             try:
                 while driver.find_element(By.ID,'servertime').text != '7:59:59 pm':
@@ -235,7 +234,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
                 book.click()
          
             except:
-                print('booked')
+                print('court is booked ')
 
         else:
             try:
@@ -248,13 +247,12 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
                 book.click()
          
             except:
-                print('booked')
+                print('court is booked')
       
         try:
             driver.find_element(By.XPATH,'//*[@id="timer"]')
             booked_court = True
         except:
-            print('except click')
             try:
                 if driver.find_element(By.XPATH, '//*[@id="booking_err_detail"]').is_displayed()==True:
                     driver.back()
@@ -333,16 +331,17 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
                     print('Cant find guest button.')
 
             time.sleep(1)
+            flag = False
             #if captchaChecker(driver) == True:
                 #print('Captcha defeated')
 
-            if 1==1:
+            if flag == False:
                 #driver.switch_to.default_content()
                 time.sleep(1)
                 x_book_button='// *[ @ id = "btnBook"] / span'
                 counter = 0
 
-                    #multiple attempts to book
+                #multiple attempts to book
                 while counter < 5:
                     try:
                         click_element_by_xpath(driver,x_book_button)
