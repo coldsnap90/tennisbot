@@ -191,6 +191,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
         '''function that waits for appropriate booking time'''
         while True:
             current_time = datetime.datetime.now().time()
+            print('Current time : ',current_time)
             if current_time >= datetime.time(hr-1, 59,0,1):
                 bool = book_slot(p_court, p_time,ball,hr)
                 if bool == False:
@@ -334,9 +335,9 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
             flag = False
             #if captchaChecker(driver) == True:
                 #print('Captcha defeated')
+                #driver.switch_to.default_content()
 
             if flag == False:
-                #driver.switch_to.default_content()
                 time.sleep(1)
                 x_book_button='// *[ @ id = "btnBook"] / span'
                 counter = 0
@@ -346,7 +347,6 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
                     try:
                         click_element_by_xpath(driver,x_book_button)
                         counter = 5
-
                     except:
                         counter+=1
                   
@@ -379,8 +379,8 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
             time.sleep(1)
 
     while True:
-        current_time = datetime.datetime.now().time()
-       
+        current_time = datetime.datetime    .now().time()
+        print('Current time : ',current_time)
         if current_time >= datetime.time(hr-1, 57, 0, 2):
                 try:
                     login_tennis(day, court)
