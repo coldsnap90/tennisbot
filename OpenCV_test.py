@@ -4,31 +4,21 @@ from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium import webdriver
-from selenium.webdriver.common import action_chains
 from selenium.webdriver.common.action_chains import ActionChains
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
-
-
 import datetime
 import speech_recognition as SR
 import urllib
 import urllib.request
-import pydub
-import os
 import time
 from selenium.webdriver.remote.webelement import WebElement
 
-recog = SR.Recognizer()  
+
 urllib.request.urlcleanup()
 
-class clock:
-    def __init__(self,time):
-        self.time = time
-    def __repr__(self):
-        return f"{self.time}"
 
 def typeSpeed(element: WebElement,text:str):
     ''' function for typing for captcha at a human speed'''
@@ -49,46 +39,9 @@ def captchaChecker(driver):
         return False
     
 
-def captchaCrush(driver):
-    ''' function for beating captcha's accessibility audio '''
-    frame=[]
-    frame = driver.find_elements(By.TAG_NAME,'iframe')
-    WebDriverWait(driver,10).until(EC.frame_to_be_available_and_switch_to_it((frame[2])))
-    itemX = driver.find_element(By.ID,'recaptcha-audio-button')
-    clicked = WebDriverWait(driver,10).until(EC.presence_of_element_located((By.ID,'recaptcha-audio-button'))).click()
-    itemX.click()
-    time.sleep(1)
-    play = driver.find_element(By.XPATH,'/html/body/div/div/div[7]/a').get_attribute('href')
-    WebDriverWait(driver,10).until(EC.presence_of_element_located((By.XPATH,'/html/body/div/div/div[7]/a')))
-    urllib.request.urlretrieve(play,'audio.mp3')
-    os.path.join('audio.mp3')
-    path_wav = os.path.join('audio.wav')
-    sound = pydub.AudioSegment.from_mp3(os.getcwd()+"\\audio.mp3")
-    sound.export(path_wav,format='wav')
-    sample_sound = SR.AudioFile(path_wav)
-    
-    #enters the recorded sound translated to text
-    with sample_sound as source:
-        audio = recog.record(source)
-        key = recog.recognize_google(audio)
- 
-    try:
-        words = driver.find_element(By.CSS_SELECTOR,'#audio-response')
-        (driver,10).until(EC.presence_of_element_located((By.CSS_SELECTOR,'#audio-response')))
-        typeSpeed(words,key)
-    
-    except:
-        print('Fail to verify')
-
-    #clicks enter captcha text after its verified
-    enter = driver.find_element(By.CSS_SELECTOR,'#recaptcha-verify-button')
-    WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.CSS_SELECTOR,'#recaptcha-verify-button'))).click()
-    driver.switch_to.default_content()
-
 
 def click_element_by_xpath(driver, xpath, timeout=10):
     ''' function clicks web elements'''
-    print('clicking')
     wait = WebDriverWait(driver, timeout)
     element = wait.until(EC.element_to_be_clickable(driver.find_element(By.XPATH, xpath)))
     element.click()
@@ -227,11 +180,12 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
         if hr == 20:
             try:
                 while driver.find_element(By.ID,'servertime').text != '7:59:59 pm':
-                    try:
-                        print('time : ',driver.find_element(By.ID,'servertime').text)
-                    except:
-                        pass
-                time.sleep(0.95)
+                        try:
+                            if driver.find_element(By.ID,'servertime').text == '7:59:59 pm':
+                                print('time : ',driver.find_element(By.ID,'servertime').text)
+                        except:
+                            pass
+                time.sleep(0.975)
                 book.click()
          
             except:
@@ -241,10 +195,11 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
             try:
                 while driver.find_element(By.ID,'servertime').text != '9:59:59 am':
                     try:
-                        print('time : ',driver.find_element(By.ID,'servertime').text)
+                        if driver.find_element(By.ID,'servertime').text == '9:59:59 am':
+                            print('time : ',driver.find_element(By.ID,'servertime').text)
                     except:
                         pass
-                time.sleep(0.95)
+                time.sleep(0.975)
                 book.click()
          
             except:
@@ -379,7 +334,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
             time.sleep(1)
 
     while True:
-        current_time = datetime.datetime    .now().time()
+        current_time = datetime.datetime.now().time()
         print('Current time : ',current_time)
         if current_time >= datetime.time(hr-1, 57, 0, 2):
                 try:
