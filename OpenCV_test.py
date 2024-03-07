@@ -145,6 +145,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
         while True:
             current_time = datetime.datetime.now().time()
             print('Current time : ',current_time)
+       
             if current_time >= datetime.time(hr-1, 59,0,1):
                 bool = book_slot(p_court, p_time,ball,hr)
                 if bool == False:
@@ -154,12 +155,15 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
                     return True
 
 
+          
+
+
     def book_slot(p_court, p_time,ball,hr):
         ''' slot booking function'''
         p_court = p_court
         p_time = p_time
         ball=ball
-
+        hr = 0
         # Click on the element Slot
         x_slot='//*[@id="viewer"]/div[4]/table/tbody/tr/td[' + str(p_court) + ']/div[' + str(p_time) + ']'
         x_slotz='//*[@id="viewer"]/div[4]/table/tbody/tr/td[' + str(p_court) + ']/div'
@@ -180,26 +184,28 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
         if hr == 20:
             try:
                 while driver.find_element(By.ID,'servertime').text != '7:59:59 pm':
-                        try:
-                            if driver.find_element(By.ID,'servertime').text == '7:59:59 pm':
-                                print('time : ',driver.find_element(By.ID,'servertime').text)
-                        except:
-                            pass
-                time.sleep(0.975)
+                        pass
+                time.sleep(1)
                 book.click()
-         
+
             except:
                 print('court is booked ')
 
+        elif hr == 0:
+            try:
+                while driver.find_element(By.ID,'servertime').text != '8:41:59 pm':
+                        pass
+                time.sleep(1)
+                book.click()
+             
+            except:
+                print('court is booked ')
+        
         else:
             try:
                 while driver.find_element(By.ID,'servertime').text != '9:59:59 am':
-                    try:
-                        if driver.find_element(By.ID,'servertime').text == '9:59:59 am':
-                            print('time : ',driver.find_element(By.ID,'servertime').text)
-                    except:
                         pass
-                time.sleep(0.975)
+                time.sleep(1)
                 book.click()
          
             except:
@@ -336,6 +342,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
     while True:
         current_time = datetime.datetime.now().time()
         print('Current time : ',current_time)
+
         if current_time >= datetime.time(hr-1, 57, 0, 2):
                 try:
                     login_tennis(day, court)
