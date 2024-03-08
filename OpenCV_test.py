@@ -145,6 +145,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
         while True:
             current_time = datetime.datetime.now().time()
             print('Current time : ',current_time)
+            print('Finding courts...')
        
             if current_time >= datetime.time(hr-1, 59,0,1):
                 bool = book_slot(p_court, p_time,ball,hr)
@@ -163,15 +164,12 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
         p_court = p_court
         p_time = p_time
         ball=ball
-        hr = 0
         # Click on the element Slot
         x_slot='//*[@id="viewer"]/div[4]/table/tbody/tr/td[' + str(p_court) + ']/div[' + str(p_time) + ']'
         x_slotz='//*[@id="viewer"]/div[4]/table/tbody/tr/td[' + str(p_court) + ']/div'
-        x_slots ='/html/body/div[3]/div[3]/div[4]/div[2]/div[2]/table/tbody/tr[2]/td[1]/table/tbody/tr/td[2]'
         WebDriverWait(driver, 5).until(EC.presence_of_all_elements_located((By.XPATH, x_slotz)))
         WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, x_slot)))
         bool = False
-        x =''
         while bool == False:
             try:
                 book = driver.find_element(By.XPATH,x_slot)
@@ -185,28 +183,23 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
             try:
                 while driver.find_element(By.ID,'servertime').text != '7:59:59 pm':
                         pass
-                time.sleep(1)
+                time.sleep(0.99)
                 book.click()
+                print('Program clock ~6.5 seconds faster then tennis server clock, subtract that time from this...')
+                print(datetime.datetime.now().time())
 
             except:
                 print('court is booked ')
 
-        elif hr == 0:
-            try:
-                while driver.find_element(By.ID,'servertime').text != '8:41:59 pm':
-                        pass
-                time.sleep(1)
-                book.click()
-             
-            except:
-                print('court is booked ')
-        
+   
         else:
             try:
                 while driver.find_element(By.ID,'servertime').text != '9:59:59 am':
                         pass
-                time.sleep(1)
+                time.sleep(0.99)
                 book.click()
+                print('Program clock ~6.5 seconds faster then tennis server clock, subtract that time from this...')
+                print(datetime.datetime.now().time())
          
             except:
                 print('court is booked')
