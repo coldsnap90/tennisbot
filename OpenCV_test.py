@@ -10,7 +10,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 import datetime
-import speech_recognition as SR
 import urllib
 import urllib.request
 import time
