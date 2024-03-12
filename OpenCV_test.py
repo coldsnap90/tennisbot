@@ -9,11 +9,14 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from webdriver_manager.firefox import GeckoDriverManager
 import datetime
 import urllib
 import urllib.request
 import time
 from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.common.keys import Keys
 
 
 urllib.request.urlcleanup()
@@ -49,7 +52,16 @@ def click_element_by_xpath(driver, xpath, timeout=10):
 
 def book_c(day,court,p_court,p_time,hr,ball,courts):
     ''' function for booking court driver function '''
-    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+    
+    options = webdriver.ChromeOptions() 
+    options.add_argument("--disable-blink-features=AutomationControlled") 
+ 
+    # Exclude the collection of enable-automation switches 
+    options.add_experimental_option("excludeSwitches", ["enable-automation"]) 
+ 
+# Turn-off userAutomationExtension 
+    options.add_experimental_option("useAutomationExtension", False) 
+    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()),options=options)
     action = ActionChains(driver)
     driver.maximize_window()
     driver.implicitly_wait(10)
@@ -69,6 +81,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
         print("Selected Court : "+str(court))
         day = day
         court = court
+      
         driver.get("https://vanlawn.com/Login_(1).aspx")
         time.sleep(1)
 
@@ -141,11 +154,11 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
 
     def wait_tennis(p_court, p_time,hr,ball):
         '''function that waits for appropriate booking time'''
+        time.sleep(0.5)
         while True:
             current_time = datetime.datetime.now().time()
             print('Current time : ',current_time)
             print('Finding courts...')
-       
             if current_time >= datetime.time(hr-1, 59,0,1):
                 bool = book_slot(p_court, p_time,ball,hr)
                 if bool == False:
@@ -155,11 +168,9 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
                     return True
 
 
-          
-
-
-    def book_slot(p_court, p_time,ball,hr):
+    def book_slot(p_court, p_time,ball,hr,is_waitlist):
         ''' slot booking function'''
+        print('book slot')
         p_court = p_court
         p_time = p_time
         ball=ball
@@ -168,7 +179,17 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
         x_slotz='//*[@id="viewer"]/div[4]/table/tbody/tr/td[' + str(p_court) + ']/div'
         WebDriverWait(driver, 5).until(EC.presence_of_all_elements_located((By.XPATH, x_slotz)))
         WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, x_slot)))
+        n = 0
+        if p_time < 5:
+            n = 1
+        elif p_time < 10:
+            n = 4
+        else:
+            n = 7
+        for i in range(0,n):
+                    ActionChains(driver).key_down(Keys.DOWN).perform()
         bool = False
+
         while bool == False:
             try:
                 book = driver.find_element(By.XPATH,x_slot)
@@ -177,11 +198,14 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
             except:
                 print('cannot find element')
         booked_court = False
+        
         #waiting for time to book
         if hr == 20:
             try:
-                while driver.find_element(By.ID,'servertime').text != '7:59:59 pm':
-                        pass
+                if driver.find_element(By.ID,'servertime').text < '7:59:59 pm':
+                    print('of')
+                    while driver.find_element(By.ID,'servertime').text != '7:59:59 pm':
+                            pass
                 time.sleep(0.99)
                 book.click()
                 print('Program clock ~6.5 seconds faster then tennis server clock, subtract that time from this...')
@@ -190,11 +214,11 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
             except:
                 print('court is booked ')
 
-   
         else:
             try:
-                while driver.find_element(By.ID,'servertime').text != '9:59:59 am':
-                        pass
+                if driver.find_element(By.ID,'servertime').text < '9:59:59 am':
+                    while driver.find_element(By.ID,'servertime').text != '9:59:59 am':
+                            pass
                 time.sleep(0.99)
                 book.click()
                 print('Program clock ~6.5 seconds faster then tennis server clock, subtract that time from this...')
@@ -260,10 +284,13 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
             
             except:
                     print('Court booking available')
-       
-            time.sleep(0.5)
+            print('1')
+            for i in range(0,2):
+                ActionChains(driver).key_down(Keys.DOWN).perform()
+
             counter = 0
             #multiple attempts to type friend name
+            print('friend')
             while counter < 5:
                 counter+=1
                 try:
@@ -272,6 +299,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
 
                 except:
                     print('Cant type friend in.')
+            time.sleep(0.5)
 
             #multiple attempts to click guest button
             while counter  > 0:
@@ -284,17 +312,19 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
                 except:
                     print('Cant find guest button.')
 
-            time.sleep(1)
+            time.sleep(0.75)
             flag = False
+
             #if captchaChecker(driver) == True:
                 #print('Captcha defeated')
                 #driver.switch_to.default_content()
 
             if flag == False:
-                time.sleep(1)
+                time.sleep(0.5)
                 x_book_button='// *[ @ id = "btnBook"] / span'
                 counter = 0
-
+                for i in range(0,2):
+                    ActionChains(driver).key_down(Keys.DOWN).perform()
                 #multiple attempts to book
                 while counter < 5:
                     try:
@@ -303,7 +333,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
                     except:
                         counter+=1
                   
-                time.sleep(2)
+                time.sleep(1)
                 try:
                      driver.find_element(By.XPATH, '//*[@id="booking_err_detail"]').is_displayed()
                      error = driver.find_element(By.XPATH, '//*[@id="booking_err_detail"]').text
@@ -334,7 +364,6 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
     while True:
         current_time = datetime.datetime.now().time()
         print('Current time : ',current_time)
-
         if current_time >= datetime.time(hr-1, 57, 0, 2):
                 try:
                     login_tennis(day, court)

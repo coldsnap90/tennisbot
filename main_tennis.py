@@ -29,7 +29,6 @@ def display_selection():
         court = 4
 
     
-
     if int(day)==1:
         hr=20
         print("Booking for Day + 1, Time to book is : 8 PM ")
