@@ -38,12 +38,10 @@ def display_selection():
         print("Booking for Day + 2, Time to book is : 10 AM ")
 
     counter = 0
-
     print('Activating Tennis booking bot version 2.0 ... powered by Brute Force Solutions.')
     while counter < 3:
-        print(hr)
-        x =OC.book_c(int(day),int(court),int(p_court),int(p_time),int(hr),ball,courts)
-        if x == True:
+        booked =OC.book_c(int(day),int(court),int(p_court),int(p_time),int(hr),ball,courts)
+        if booked == True:
             counter = 3
         else:
             counter+=1

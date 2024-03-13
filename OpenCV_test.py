@@ -90,12 +90,12 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
                             '//*[@id="p_lt_ContentWidgets_pageplaceholder_p_lt_zoneContent_CHO_Widget_LoginFormWithFullscreenBackground_XLarge_loginCtrl_BaseLogin_UserName"]')
         
         # find password input field and insert password as well
-        typeSpeed(type1,"7260a")
+        typeSpeed(type1,"")
         time.sleep(0.5)
         type2 = driver.find_element(By.XPATH,
 
                             '//*[@id="p_lt_ContentWidgets_pageplaceholder_p_lt_zoneContent_CHO_Widget_LoginFormWithFullscreenBackground_XLarge_loginCtrl_BaseLogin_Password"]')
-        typeSpeed(type2,"Bunnyof2")
+        typeSpeed(type2,"")
         
         # click login button
         x_login='//*[@id="p_lt_ContentWidgets_pageplaceholder_p_lt_zoneContent_CHO_Widget_LoginFormWithFullscreenBackground_XLarge_loginCtrl_BaseLogin_LoginButton"]'
@@ -159,7 +159,8 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
             current_time = datetime.datetime.now().time()
             print('Current time : ',current_time)
             print('Finding courts...')
-            if current_time >= datetime.time(hr-1, 59,0,1):
+            if 1 == 1:
+            #if current_time >= datetime.time(hr-1, 59,0,1):
                 bool = book_slot(p_court, p_time,ball,hr)
                 if bool == False:
                     return False
@@ -168,7 +169,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
                     return True
 
 
-    def book_slot(p_court, p_time,ball,hr,is_waitlist):
+    def book_slot(p_court, p_time,ball,hr):
         ''' slot booking function'''
         print('book slot')
         p_court = p_court
@@ -179,6 +180,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
         x_slotz='//*[@id="viewer"]/div[4]/table/tbody/tr/td[' + str(p_court) + ']/div'
         WebDriverWait(driver, 5).until(EC.presence_of_all_elements_located((By.XPATH, x_slotz)))
         WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, x_slot)))
+        print('found')
         n = 0
         if p_time < 5:
             n = 1
@@ -188,8 +190,9 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
             n = 7
         for i in range(0,n):
                     ActionChains(driver).key_down(Keys.DOWN).perform()
-        bool = False
 
+        print('found')
+        bool = False
         while bool == False:
             try:
                 book = driver.find_element(By.XPATH,x_slot)
@@ -364,7 +367,8 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
     while True:
         current_time = datetime.datetime.now().time()
         print('Current time : ',current_time)
-        if current_time >= datetime.time(hr-1, 57, 0, 2):
+        if 1 == 1:
+        #if current_time >= datetime.time(hr-1, 57, 0, 2):
                 try:
                     login_tennis(day, court)
                     bool = wait_tennis(p_court, p_time, hr,ball)
