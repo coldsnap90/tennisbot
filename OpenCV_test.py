@@ -47,7 +47,7 @@ def click_element_by_xpath(driver, xpath, timeout=10):
     wait = WebDriverWait(driver, timeout)
     element = wait.until(EC.element_to_be_clickable(driver.find_element(By.XPATH, xpath)))
     element.click()
-    print('clicked at : ',datetime.datetime.now().time())
+
 
 
 def book_c(day,court,p_court,p_time,hr,ball,courts):
@@ -55,11 +55,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
     
     options = webdriver.ChromeOptions() 
     options.add_argument("--disable-blink-features=AutomationControlled") 
- 
-    # Exclude the collection of enable-automation switches 
     options.add_experimental_option("excludeSwitches", ["enable-automation"]) 
- 
-# Turn-off userAutomationExtension 
     options.add_experimental_option("useAutomationExtension", False) 
     driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()),options=options)
     action = ActionChains(driver)
@@ -76,7 +72,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
 
 
     def login_tennis(day, court):
-        '''function to login to tennis vbookinfg account'''
+        '''function to login to tennis booking account'''
         print("Selected Day : "+str(day))
         print("Selected Court : "+str(court))
         day = day
@@ -90,12 +86,12 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
                             '//*[@id="p_lt_ContentWidgets_pageplaceholder_p_lt_zoneContent_CHO_Widget_LoginFormWithFullscreenBackground_XLarge_loginCtrl_BaseLogin_UserName"]')
         
         # find password input field and insert password as well
-        typeSpeed(type1,"")
+        typeSpeed(type1,"7260a")
         time.sleep(0.5)
         type2 = driver.find_element(By.XPATH,
 
                             '//*[@id="p_lt_ContentWidgets_pageplaceholder_p_lt_zoneContent_CHO_Widget_LoginFormWithFullscreenBackground_XLarge_loginCtrl_BaseLogin_Password"]')
-        typeSpeed(type2,"")
+        typeSpeed(type2,"Bunnyof2")
         
         # click login button
         x_login='//*[@id="p_lt_ContentWidgets_pageplaceholder_p_lt_zoneContent_CHO_Widget_LoginFormWithFullscreenBackground_XLarge_loginCtrl_BaseLogin_LoginButton"]'
@@ -159,8 +155,8 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
             current_time = datetime.datetime.now().time()
             print('Current time : ',current_time)
             print('Finding courts...')
-            if 1 == 1:
-            #if current_time >= datetime.time(hr-1, 59,0,1):
+
+            if current_time >= datetime.time(hr-1, 59,0,1):
                 bool = book_slot(p_court, p_time,ball,hr)
                 if bool == False:
                     return False
@@ -180,18 +176,17 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
         x_slotz='//*[@id="viewer"]/div[4]/table/tbody/tr/td[' + str(p_court) + ']/div'
         WebDriverWait(driver, 5).until(EC.presence_of_all_elements_located((By.XPATH, x_slotz)))
         WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, x_slot)))
-        print('found')
-        n = 0
+
+        k_down = 0
         if p_time < 5:
-            n = 1
+            k_down = 1
         elif p_time < 10:
-            n = 4
+            k_down = 4
         else:
-            n = 7
-        for i in range(0,n):
+            k_down = 7
+        for i in range(0,k_down):
                     ActionChains(driver).key_down(Keys.DOWN).perform()
 
-        print('found')
         bool = False
         while bool == False:
             try:
@@ -202,11 +197,11 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
                 print('cannot find element')
         booked_court = False
         
+        
         #waiting for time to book
         if hr == 20:
             try:
                 if driver.find_element(By.ID,'servertime').text < '7:59:59 pm':
-                    print('of')
                     while driver.find_element(By.ID,'servertime').text != '7:59:59 pm':
                             pass
                 time.sleep(0.99)
@@ -276,7 +271,6 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
 
         time.sleep(1)
 
-        print('ball 0')
         if ball==0:
             time.sleep(1)
             try:
@@ -287,13 +281,12 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
             
             except:
                     print('Court booking available')
-            print('1')
+
             for i in range(0,2):
                 ActionChains(driver).key_down(Keys.DOWN).perform()
 
             counter = 0
             #multiple attempts to type friend name
-            print('friend')
             while counter < 5:
                 counter+=1
                 try:
@@ -317,10 +310,6 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
 
             time.sleep(0.75)
             flag = False
-
-            #if captchaChecker(driver) == True:
-                #print('Captcha defeated')
-                #driver.switch_to.default_content()
 
             if flag == False:
                 time.sleep(0.5)
@@ -367,8 +356,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
     while True:
         current_time = datetime.datetime.now().time()
         print('Current time : ',current_time)
-        if 1 == 1:
-        #if current_time >= datetime.time(hr-1, 57, 0, 2):
+        if current_time >= datetime.time(hr-1, 57, 0, 2):
                 try:
                     login_tennis(day, court)
                     bool = wait_tennis(p_court, p_time, hr,ball)
