@@ -86,12 +86,12 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
                             '//*[@id="p_lt_ContentWidgets_pageplaceholder_p_lt_zoneContent_CHO_Widget_LoginFormWithFullscreenBackground_XLarge_loginCtrl_BaseLogin_UserName"]')
         
         # find password input field and insert password as well
-        typeSpeed(type1,"7260a")
+        typeSpeed(type1,"")
         time.sleep(0.5)
         type2 = driver.find_element(By.XPATH,
 
                             '//*[@id="p_lt_ContentWidgets_pageplaceholder_p_lt_zoneContent_CHO_Widget_LoginFormWithFullscreenBackground_XLarge_loginCtrl_BaseLogin_Password"]')
-        typeSpeed(type2,"Bunnyof2")
+        typeSpeed(type2,"")
         
         # click login button
         x_login='//*[@id="p_lt_ContentWidgets_pageplaceholder_p_lt_zoneContent_CHO_Widget_LoginFormWithFullscreenBackground_XLarge_loginCtrl_BaseLogin_LoginButton"]'
