@@ -17,7 +17,7 @@ import urllib.request
 import time
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.keys import Keys
-
+import time
 
 urllib.request.urlcleanup()
 
@@ -86,12 +86,12 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
                             '//*[@id="p_lt_ContentWidgets_pageplaceholder_p_lt_zoneContent_CHO_Widget_LoginFormWithFullscreenBackground_XLarge_loginCtrl_BaseLogin_UserName"]')
         
         # find password input field and insert password as well
-        typeSpeed(type1,"7260a")
+        typeSpeed(type1,"")
         time.sleep(0.5)
         type2 = driver.find_element(By.XPATH,
 
                             '//*[@id="p_lt_ContentWidgets_pageplaceholder_p_lt_zoneContent_CHO_Widget_LoginFormWithFullscreenBackground_XLarge_loginCtrl_BaseLogin_Password"]')
-        typeSpeed(type2,"Bunnyof2")
+        typeSpeed(type2,"")
         
         # click login button
         x_login='//*[@id="p_lt_ContentWidgets_pageplaceholder_p_lt_zoneContent_CHO_Widget_LoginFormWithFullscreenBackground_XLarge_loginCtrl_BaseLogin_LoginButton"]'
@@ -155,7 +155,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
             current_time = datetime.datetime.now().time()
             print('Current time : ',current_time)
             print('Finding courts...')
-
+            
             if current_time >= datetime.time(hr-1, 59,0,1):
                 bool = book_slot(p_court, p_time,ball,hr)
                 if bool == False:
@@ -197,14 +197,14 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
                 print('cannot find element')
         booked_court = False
         
-        
+     
         #waiting for time to book
         if hr == 20:
             try:
                 if driver.find_element(By.ID,'servertime').text < '7:59:59 pm':
                     while driver.find_element(By.ID,'servertime').text != '7:59:59 pm':
                             pass
-                time.sleep(0.99)
+                time.sleep(0.98)
                 book.click()
                 print('Program clock ~6.5 seconds faster then tennis server clock, subtract that time from this...')
                 print(datetime.datetime.now().time())

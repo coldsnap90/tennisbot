@@ -28,7 +28,8 @@ def display_selection():
     if court == "4. Rooftop 13 - 16 ": 
         court = 4
 
-    
+    if int(day) ==0:
+        hr = True
     if int(day)==1:
         hr=20
         print("Booking for Day + 1, Time to book is : 8 PM ")
@@ -55,7 +56,7 @@ main_window.title("Tennis Booking BOT")
 v = tk.IntVar()
 combo3 = ttk.Combobox(state="readonly",values=["1. Indoor Hard Courts 1-4 ", "2. Clay Courts 5-8 ", "3. Hard Courts 9 - 12 ", "4. Rooftop 13 - 16 "])
 combo2 = ttk.Combobox(state="readonly",values=["1", "2", "3", "4"])
-combo = ttk.Combobox(state="readonly",values=["1", "2"])
+combo = ttk.Combobox(state="readonly",values=["0","1", "2"])
 combo4 = ttk.Combobox(state="readonly",values=["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16"])
 rd1=ttk.Radiobutton(text="Book Ball Machine", variable=v,value=1)
 
