@@ -110,7 +110,7 @@ def click_element_by_xpath(driver, xpath, timeout=10):
     element.click()
 
 
-def book_c(day,court,p_court,p_time,hr,ball,courts):
+def book_c(day,court,p_court,p_time,hr,ball,courts,counter):
     ''' function for booking court driver function '''
     options = webdriver.ChromeOptions() 
     options.add_argument("--disable-blink-features=AutomationControlled") 
@@ -417,7 +417,8 @@ def book_c(day,court,p_court,p_time,hr,ball,courts):
                         return True
                     else:
                         print('Court unsuccessfully booked, signing out and  closing window.')
-                        waitlist(driver,day,court,p_time)
+                        if counter  == 1:
+                            waitlist(driver,day,court,p_time)
                         driver.quit()
                         return False
                     

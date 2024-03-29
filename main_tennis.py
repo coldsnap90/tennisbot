@@ -43,7 +43,7 @@ if __name__ == "__main__":
             counter = 0
       
             while counter < 2:
-                booked =OC.book_c(int(day),int(court),int(p_court),int(p_time),int(hr),ball,courts)
+                booked =OC.book_c(int(day),int(court),int(p_court),int(p_time),int(hr),ball,courts,counter)
                 if booked == True:
                     counter = 2
                 else:
