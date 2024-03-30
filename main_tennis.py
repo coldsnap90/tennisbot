@@ -4,9 +4,8 @@ from tkinter import *
 import tkinter as tk
 import multiprocessing as mp
 
-
 if __name__ == "__main__":
-
+        
         def display_selection():
             # Get the selected value.
             hr=0
@@ -41,13 +40,15 @@ if __name__ == "__main__":
                 print("Booking for Day + 2, Time to book is : 10 AM ")
 
             counter = 0
-      
+            print('Activating Tennis booking bot version 2.0 ... powered by Brute Force Solutions.')
+           
             while counter < 2:
                 booked =OC.book_c(int(day),int(court),int(p_court),int(p_time),int(hr),ball,courts,counter)
                 if booked == True:
                     counter = 2
                 else:
                     counter+=1
+            
         
 
 
