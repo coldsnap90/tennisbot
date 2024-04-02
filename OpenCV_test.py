@@ -1,4 +1,4 @@
-#from telnetlib import EC
+# CUSTOMER BOT PROGAM
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
@@ -72,7 +72,13 @@ def waitlist(driver,day,court,p_time):
             time.sleep(0.25)
             l_hour = Select(driver.find_element(By.XPATH,'//*[@id="court_late_hour"]'))
             time.sleep(0.25)
-            l_hour.select_by_value(f'{dict_hour[p_time]+1}')
+            print('late hour')
+            l_hour.select_by_value(f'{dict_hour[p_time]}')
+            time.sleep(0.25)
+            l_min = Select(driver.find_element(By.XPATH,'//*[@id="court_late_min"]'))
+            l_min.select_by_value(f'10')
+
+      
 
         if court == 2:
             hours = Select(driver.find_element(By.XPATH,'//*[@id="court_early_hour"]'))
@@ -84,19 +90,24 @@ def waitlist(driver,day,court,p_time):
             mins.select_by_value(f'{dict_min[p_time]}')
             time.sleep(0.25)
             l_hour = Select(driver.find_element(By.XPATH,'//*[@id="court_late_hour"]'))
-            l_hour.select_by_value(f'{dict_hour[p_time]+1}')
+            l_hour.select_by_value(f'{dict_hour[p_time]}')
             time.sleep(0.25)
             l_min = Select(driver.find_element(By.XPATH,'//*[@id="court_late_min"]'))
-            l_min.select_by_value(f'{dict_min[p_time]}')
+            l_min.select_by_value(f'{dict_min[p_time]+5}')
 
-        ampm = Select(driver.find_element(By.XPATH,'//*[@id="court_early_ampm"]'))
+        early_ampm = Select(driver.find_element(By.XPATH,'//*[@id="court_early_ampm"]'))
+        late_ampm = Select(driver.find_element(By.XPATH,'//*[@id="court_late_ampm"]'))
         time.sleep(0.25)
         if p_time > 6 and court != 2:
-            ampm.select_by_value('pm')
+            early_ampm.select_by_value('PM')
+            time.sleep(0.25)
+            late_ampm.select_by_value('PM')
 
         elif p_time > 5 and court == 2:
-             ampm.select_by_value('pm')
-
+            early_ampm.select_by_value('PM')
+            time.sleep(0.25)
+            late_ampm.select_by_value('PM')
+        
         if court > 1:
             court_select = Select(driver.find_element(By.XPATH,'/html/body/div[3]/div[3]/div[4]/div[2]/div[1]/div[2]/form/fieldset[2]/ul/li[2]/select'))
             time.sleep(0.25)
