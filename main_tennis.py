@@ -10,24 +10,24 @@ if __name__ == "__main__":
             # Get the selected value.
             hr=0
             day = combo.get()
-            court = combo3.get()
+            court_section = combo3.get()
             p_court = combo2.get()
             p_time = combo4.get()
             ball = v.get()
 
 
             courts =[1,2,3,4]
-            if court=="1. Indoor Hard Courts 1-4 ": 
-                court=1
+            if court_section == "1. Indoor Hard Courts 1-4 ": 
+                court_section = 1
         
-            if court == "2. Clay Courts 5-8 ": 
-                court = 2
+            if court_section == "2. Clay Courts 5-8 ": 
+                court_section = 2
         
-            if court == "3. Hard Courts 9 - 12 ": 
-                court = 3
+            if court_section == "3. Hard Courts 9 - 12 ": 
+                court_section = 3
 
-            if court == "4. Rooftop 13 - 16 ": 
-                court = 4
+            if court_section == "4. Rooftop 13 - 16 ": 
+                court_section = 4
 
             if int(day) ==0:
                 hr = True
@@ -43,7 +43,7 @@ if __name__ == "__main__":
             print('Activating Tennis booking bot version 2.0 ... powered by Brute Force Solutions.')
            
             while counter < 2:
-                booked =OC.book_c(int(day),int(court),int(p_court),int(p_time),int(hr),ball,courts,counter)
+                booked =OC.book_c(int(day),int(court_section),int(p_court),int(p_time),int(hr),ball,courts,counter)
                 if booked == True:
                     counter = 2
                 else:

@@ -42,7 +42,7 @@ def captchaChecker(driver):
     except:
         return False
     
-def waitlist(driver,day,court,p_time):
+def waitlist(driver,day,court_section ,p_time):
     ''' adds booking to waitlist '''
     time.sleep(1)
     counters = 0
@@ -64,7 +64,7 @@ def waitlist(driver,day,court,p_time):
         date = datetime.datetime.now().day + day
         start_date.select_by_value(f'{date}')
 
-        if court == 1 or court == 3:
+        if court_section  == 1 or court_section  == 3:
             e_hour = Select(driver.find_element(By.XPATH,'//*[@id="court_early_hour"]'))
             time.sleep(0.25)
             dict_hour = {1:6,2:7,3:8,4:9,5:10,6:11,7:12,8:1,9:2,10:3,11:4,12:5,13:6,14:7,15:8,16:9,17:10}
@@ -80,13 +80,13 @@ def waitlist(driver,day,court,p_time):
 
       
 
-        if court == 2:
+        if court_section  == 2:
             hours = Select(driver.find_element(By.XPATH,'//*[@id="court_early_hour"]'))
-            dict_hour = {1:'6',2:'8',3:'9',4:'10',5:'11',6:'1',7:'2',8:'3',9:'4',10:'6',11:'7',12:'8',13:'9'}
+            dict_hour = {1:6,2:8,3:9,4:10,5:11,6:1,7:2,8:3,9:4,10:6,11:7,12:8,13:9}
             hours.select_by_value(f'{dict_hour[p_time]}')
             time.sleep(0.25)
             mins = Select(driver.find_element(By.XPATH,'//*[@id="court_early_min"]'))
-            dict_min = {1:'45',3:'15',4:'30',5:'45',7:'15',8:'30',9:'45',11:'15',12:'30',13:'45'}
+            dict_min = {1:45,3:15,4:30,5:45,7:15,8:30,9:45,11:15,12:30,13:45}
             mins.select_by_value(f'{dict_min[p_time]}')
             time.sleep(0.25)
             l_hour = Select(driver.find_element(By.XPATH,'//*[@id="court_late_hour"]'))
@@ -98,20 +98,20 @@ def waitlist(driver,day,court,p_time):
         early_ampm = Select(driver.find_element(By.XPATH,'//*[@id="court_early_ampm"]'))
         late_ampm = Select(driver.find_element(By.XPATH,'//*[@id="court_late_ampm"]'))
         time.sleep(0.25)
-        if p_time > 6 and court != 2:
+        if p_time > 6 and court_section  != 2:
             early_ampm.select_by_value('PM')
             time.sleep(0.25)
             late_ampm.select_by_value('PM')
 
-        elif p_time > 5 and court == 2:
+        elif p_time > 5 and court_section  == 2:
             early_ampm.select_by_value('PM')
             time.sleep(0.25)
             late_ampm.select_by_value('PM')
         
-        if court > 1:
+        if court_section  > 1:
             court_select = Select(driver.find_element(By.XPATH,'/html/body/div[3]/div[3]/div[4]/div[2]/div[1]/div[2]/form/fieldset[2]/ul/li[2]/select'))
             time.sleep(0.25)
-            court_select.select_by_index(court)
+            court_select.select_by_index(court_section )
 
         f = driver.find_element(By.XPATH,'//*[@id="players[2][name]"]')
         typeSpeed(f,'friend')
@@ -135,7 +135,7 @@ def click_element_by_xpath(driver, xpath, timeout=10):
     element = wait.until(EC.element_to_be_clickable(driver.find_element(By.XPATH, xpath)))
     element.click()
 
-def book_c(day,court,p_court,p_time,hr,ball,courts,counter):
+def book_c(day,court_section ,p_court,p_time,hr,ball,courts,counter):
     ''' function for booking court driver function '''
     options = webdriver.ChromeOptions() 
     options.add_argument("--disable-blink-features=AutomationControlled") 
@@ -154,11 +154,11 @@ def book_c(day,court,p_court,p_time,hr,ball,courts,counter):
         time.sleep(2)
 
 
-    def login_tennis(day, court):
+    def login_tennis(day, court_section ):
         '''function to login to tennis booking account'''
-        print("Selected Day : "+str(day),"Selected Court : "+str(court))
+        print("Selected Day : "+str(day),"Selected Court : "+str(court_section ))
         day = day
-        court = court
+        court_section  = court_section 
         driver.get("https://vanlawn.com/Login_(1).aspx")
         time.sleep(1)
 
@@ -211,18 +211,18 @@ def book_c(day,court,p_court,p_time,hr,ball,courts,counter):
             time.sleep(2)
 
         # Click on the element to select Indoor Hard Courts 1 - 16
-        if court == 1:
+        if court_section  == 1:
             pass
 
-        if court == 2:
+        if court_section  == 2:
             x_court_2='//*[@id="groupHeader"]/span[2]'
             click_element_by_xpath(driver,x_court_2)
 
-        if court == 3:
+        if court_section  == 3:
             x_court_3='//*[@id="groupHeader"]/span[3]'
             click_element_by_xpath(driver, x_court_3)
 
-        if court == 4:
+        if court_section  == 4:
             x_court_4='//*[@id="groupHeader"]/span[4]'
             click_element_by_xpath(driver, x_court_4)
 
@@ -435,7 +435,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts,counter):
         print('Current time is ... ',current_time)
         if current_time >= datetime.time(hr-1, 57, 0, 2):
                 try:
-                    login_tennis(day, court)
+                    login_tennis(day, court_section)
                     bool = wait_tennis(p_court, p_time, hr,ball)
                     if bool == True:
                         print('Court successfully booked, signing out and  closing window.')
@@ -445,7 +445,7 @@ def book_c(day,court,p_court,p_time,hr,ball,courts,counter):
                     else:
                         print('Court unsuccessfully booked, signing out and  closing window.')
                         if counter  == 1:
-                            waitlist(driver,day,court,p_time)
+                            waitlist(driver,day,court_section,p_time)
                         driver.quit()
                         return False
                     
