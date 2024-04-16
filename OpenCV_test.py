@@ -1,4 +1,4 @@
-# CUSTOMER BOT PROGAM
+# CUSTOMER BOT PROGRAM, COMMENTS INCLUDED FOR CLIENTS SAKE
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
@@ -9,8 +9,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.firefox.service import Service as FirefoxService
-from webdriver_manager.firefox import GeckoDriverManager
 import datetime
 import urllib
 import urllib.request
@@ -45,18 +43,14 @@ def captchaChecker(driver):
 def waitlist(driver,day,court_section ,p_time):
     ''' adds booking to waitlist '''
     time.sleep(1)
-    counters = 0
-    while counters < 5:
+    
+    flag = True
+    while flag:
         try:
-            driver.find_element(By.XPATH,'/html/body/div[3]/div[3]/div[1]/div[2]/div/div[4]/span[2]/a').click()
-            time.sleep(0.5)
-            driver.find_element(By.XPATH,'/html/body/div[4]/div[3]/div[4]/div[1]/ul[2]/li').click()
-            time.sleep(1)
-            counters = 5
-            
+            driver.get('https://vltbc.gametime.net/scheduling/waitlist/new/sport/1')
+            flag = False
         except:
-            counters +=1
-            print('fail')
+            print('attempting to join waitlist')
 
     time.sleep(1)
     try:
@@ -167,6 +161,7 @@ def book_c(day,court_section ,p_court,p_time,hr,ball,courts,counter):
                             '//*[@id="p_lt_ContentWidgets_pageplaceholder_p_lt_zoneContent_CHO_Widget_LoginFormWithFullscreenBackground_XLarge_loginCtrl_BaseLogin_UserName"]')
         
         # find password input field and insert password as well
+        # client knows this is here and how this is bad practice
         typeSpeed(type1,"7260a")
         time.sleep(0.5)
         type2 = driver.find_element(By.XPATH,
@@ -445,6 +440,7 @@ def book_c(day,court_section ,p_court,p_time,hr,ball,courts,counter):
                     else:
                         print('Court unsuccessfully booked, signing out and  closing window.')
                         if counter  == 1:
+
                             waitlist(driver,day,court_section,p_time)
                         driver.quit()
                         return False

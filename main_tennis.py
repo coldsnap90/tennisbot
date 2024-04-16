@@ -2,7 +2,7 @@ from tkinter import messagebox, ttk
 import OpenCV_test as OC
 from tkinter import *
 import tkinter as tk
-import multiprocessing as mp
+
 
 if __name__ == "__main__":
         
@@ -29,8 +29,7 @@ if __name__ == "__main__":
             if court_section == "4. Rooftop 13 - 16 ": 
                 court_section = 4
 
-            if int(day) ==0:
-                hr = True
+       
             if int(day)==1:
                 hr=20
                 print("Booking for Day + 1, Time to book is : 8 PM ")
