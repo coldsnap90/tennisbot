@@ -8,7 +8,6 @@ from selenium.webdriver.common.action_chains import ActionChains
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
 import datetime
 import urllib
 import urllib.request
@@ -277,8 +276,8 @@ def book_c(day,court_section ,p_court,p_time,hr,ball,courts,counter):
                     while driver.find_element(By.ID,'servertime').text != '7:59:59 pm':
                             pass
                     
-                time.sleep(0.925)
-                book.click()
+                time.sleep(0.99)
+                driver.execute_script("arguments[0].click();", book)
                 print('Program clock ~6.5 seconds faster then tennis server clock, subtract that time from this...',datetime.datetime.now().time())
 
             except:
@@ -290,8 +289,8 @@ def book_c(day,court_section ,p_court,p_time,hr,ball,courts,counter):
                     while driver.find_element(By.ID,'servertime').text != '9:59:59 am':
                             pass
                     
-                time.sleep(0.925)
-                book.click()
+                time.sleep(0.99)
+                driver.execute_script("arguments[0].click();", book)
                 print('Program clock ~6.5 seconds faster then tennis server clock, subtract that time from this...',datetime.datetime.now().time())
   
             except:
