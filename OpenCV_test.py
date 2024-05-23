@@ -433,8 +433,11 @@ def book_c(day,court_section ,p_court,p_time,hr,ball,courts,counter):
                     bool = wait_tennis(p_court, p_time, hr,ball)
                     if bool == True:
                         print('Court successfully booked, signing out and  closing window.')
-                        sign_out()
-                        driver.quit()
+                        try:
+                            sign_out()
+                            driver.quit()
+                        except:
+                            driver.quit()
                         return True
                     else:
                         print('Court unsuccessfully booked, signing out and  closing window.')
