@@ -294,7 +294,7 @@ def book_c(day,court_section ,p_court,p_time,hr,ball,courts,counter):
                 print('Program clock ~6.5 seconds faster then tennis server clock, subtract that time from this...',datetime.datetime.now().time())
   
             except:
-                print('court is booked')
+                print('booking unavailable, trying next court')
       
         try:
             driver.find_element(By.XPATH,'//*[@id="timer"]')
@@ -322,7 +322,7 @@ def book_c(day,court_section ,p_court,p_time,hr,ball,courts,counter):
                         try:
                             if driver.find_element(By.XPATH, '//*[@id="booking_err_detail"]').is_displayed()==True:                           
                                 driver.back()
-                                print('court booked, trying next one.')
+                                print('court is booked, trying next one.')
 
                         except:
                             pass
