@@ -276,7 +276,7 @@ def book_c(day,court_section ,p_court,p_time,hr,ball,courts,counter):
                     while driver.find_element(By.ID,'servertime').text != '7:59:59 pm':
                             pass
                     
-                time.sleep(0.875)
+                time.sleep(0.9)
                 book.click()
                 print('Program clock ~6.5 seconds faster then tennis server clock, subtract that time from this...',datetime.datetime.now().time())
 
@@ -289,7 +289,7 @@ def book_c(day,court_section ,p_court,p_time,hr,ball,courts,counter):
                     while driver.find_element(By.ID,'servertime').text != '9:59:59 am':
                             pass
                     
-                time.sleep(0.875)
+                time.sleep(0.9)
                 book.click()
                 print('Program clock ~6.5 seconds faster then tennis server clock, subtract that time from this...',datetime.datetime.now().time())
   
