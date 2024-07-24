@@ -108,11 +108,13 @@ def waitlist(driver,day,court_section ,p_time):
 
         f = driver.find_element(By.XPATH,'//*[@id="players[2][name]"]')
         typeSpeed(f,'friend')
+        print('friend added to waitlist')
         x_guest_radio = '//*[@id="players[2][guest]"]'
         time.sleep(0.25)
         click_element_by_xpath(driver,x_guest_radio)
         time.sleep(0.25)
         but = '/html/body/div[3]/div[3]/div[4]/div[2]/div[1]/div[2]/form/button'
+        print('attempting to add to waitlist')
         click_element_by_xpath(driver,but)
         print('Added booking to waitlist.')
 
@@ -276,7 +278,7 @@ def book_c(day,court_section ,p_court,p_time,hr,ball,courts,counter):
                     while driver.find_element(By.ID,'servertime').text != '7:59:59 pm':
                             pass
                     
-                time.sleep(0.9)
+                time.sleep(0.89)
                 book.click()
                 print('Program clock ~6.5 seconds faster then tennis server clock, subtract that time from this...',datetime.datetime.now().time())
 
@@ -289,7 +291,7 @@ def book_c(day,court_section ,p_court,p_time,hr,ball,courts,counter):
                     while driver.find_element(By.ID,'servertime').text != '9:59:59 am':
                             pass
                     
-                time.sleep(0.9)
+                time.sleep(0.89)
                 book.click()
                 print('Program clock ~6.5 seconds faster then tennis server clock, subtract that time from this...',datetime.datetime.now().time())
   
@@ -362,6 +364,7 @@ def book_c(day,court_section ,p_court,p_time,hr,ball,courts,counter):
                 counter+=1
                 try:
                     driver.find_element(By.XPATH, '// *[ @ id = "players[2][name]"]').send_keys("friend")
+                    print('friend added')
                     counter = 5
 
                 except:
@@ -374,6 +377,7 @@ def book_c(day,court_section ,p_court,p_time,hr,ball,courts,counter):
                 try:
                     x_guest_radio=' // *[ @ id = "players[2][guest]"]'
                     click_element_by_xpath(driver,x_guest_radio)
+                    print('guest added')
                     counter = 0
 
                 except:
@@ -393,6 +397,7 @@ def book_c(day,court_section ,p_court,p_time,hr,ball,courts,counter):
                 while counter < 5:
                     try:
                         click_element_by_xpath(driver,x_book_button)
+                        print('court book button has successfully been clicked')
                         counter = 5
                    
                     except:
