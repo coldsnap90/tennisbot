@@ -5,9 +5,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from webdriver_manager.firefox import GeckoDriverManager
 import datetime
 import urllib
 import urllib.request
@@ -132,11 +132,7 @@ def click_element_by_xpath(driver, xpath, timeout=10):
 
 def book_c(day,court_section ,p_court,p_time,hr,ball,courts,counter):
     ''' function for booking court driver function '''
-    options = webdriver.ChromeOptions() 
-    options.add_argument("--disable-blink-features=AutomationControlled") 
-    options.add_experimental_option("excludeSwitches", ["enable-automation"]) 
-    options.add_experimental_option("useAutomationExtension", False) 
-    driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()),options=options)
+    driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
     driver.maximize_window()
     driver.implicitly_wait(10)
 
